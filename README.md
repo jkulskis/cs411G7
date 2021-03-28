@@ -8,7 +8,7 @@ up with a better name.
 ## Setting up a development environment
 While developing the application, it can be helpful to setup a python virtual environment for package management.
 
-#### You can install virtualenv with:
+### You can install virtualenv with:
 
 *On macOS and Linux:*
 
@@ -18,7 +18,7 @@ While developing the application, it can be helpful to setup a python virtual en
 
 `py -m pip install --user virtualenv`
 
-#### Next, just create a venv with:
+### Next, just create a venv with:
 
 *On macOS and Linux:*
 
@@ -28,7 +28,7 @@ While developing the application, it can be helpful to setup a python virtual en
 
 `py -m venv env`
 
-#### Then you can activate the venv with:
+### Then you can activate the venv with:
 
 *On macOS and Linux:*
 
