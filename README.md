@@ -8,25 +8,34 @@ up with a better name.
 ## Setting up a development environment
 While developing the application, it can be helpful to setup a python virtual environment for package management.
 
-You can install virtualenv with:
+#### You can install virtualenv with:
+
 *On macOS and Linux:*
+
 `python3 -m pip install --user virtualenv`
 
 *On Windows:*
+
 `py -m pip install --user virtualenv`
 
-Next, just create a venv with:
+#### Next, just create a venv with:
+
 *On macOS and Linux:*
+
 `python3 -m venv env`
 
 *On Windows:*
+
 `py -m venv env`
 
-Then you can activate the venv with:
+#### Then you can activate the venv with:
+
 *On macOS and Linux:*
+
 `source env/bin/activate`
 
 *On Windows:*
+
 `.\env\Scripts\activate`
 
 Now when you use python, it should be from the venv source, so your environment will be isolated to the project and you won't mess with your native environment + you can easily test things with a clean slate.
@@ -43,7 +52,9 @@ By adding `develop`, when a change is added you won't need to reinstall every ti
 
 ## Running the flask app
 
-Now, just run the following to start up the flask app (instructions from https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/#run-the-application)
+Now, just run the following to start up the flask app 
+
+(instructions from https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/#run-the-application)
 
 *On macOS and Linux*
 ```
