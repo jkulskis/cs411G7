@@ -1,0 +1,4 @@
+graft playlist_maker/static # graft: include all files under DIR
+graft playlist_maker/templates
+graft tests
+global-exclude *.pyc
