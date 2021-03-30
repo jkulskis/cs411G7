@@ -58,21 +58,21 @@ Now, just run the following to start up the flask app
 
 *On macOS and Linux*
 ```
-$ export FLASK_APP=flaskr
+$ export FLASK_APP=playlist_maker
 $ export FLASK_ENV=development
 $ flask run
 ```
 
 *On Windows CMD*
 ```
-> set FLASK_APP=flaskr
+> set FLASK_APP=playlist_maker
 > set FLASK_ENV=development
 > flask run
 ```
 
 *On Windows PowerShell*
 ```
-> $env:FLASK_APP = "flaskr"
+> $env:FLASK_APP = "playlist_maker"
 > $env:FLASK_ENV = "development"
 > flask run
 ```
