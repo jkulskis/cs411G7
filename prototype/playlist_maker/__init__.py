@@ -21,7 +21,7 @@ def create_app():
         playlist_id = request.form['searchID']
         url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
 
-        oauth_token = 'TOKEN GOES HERE' # must add auth token here
+        oauth_token = 'BQBOwXg9i3lWs8r2m8sPDqKipA7aMnnyVqGH_rdDCpaKdDUY4LHxD--Cxe7U-AA-AHKWeQFEX11vx1zzrjCze0taqX3SbHrpJcKMf_23Eq7R51XZfqTOgu3EImda8P02-7-gHAdIJmLW1hpaw2ApJWo2z8TLk1p9lHlSFHb25aTq67HarlXvoJ450Dw9rWX0_CB9IQ9HajVL' # must add auth token here
         payload={}
         headers = {
         'Authorization': f'Bearer {oauth_token}'
