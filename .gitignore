@@ -26,3 +26,5 @@ htmlcov/
 *,cover
 
 instance/
+.flask_session
+.spotify_caches

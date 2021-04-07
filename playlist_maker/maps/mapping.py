@@ -1,5 +1,8 @@
-from flask import Blueprint, request, render_template, current_app
+from flask import Blueprint, request, redirect, render_template, current_app, session
+from playlist_maker.cache import get_cache_handler
 import googlemaps
+import spotipy
+from spotipy import SpotifyOAuth
 # from app import app as app <-- won't work
 
 map_blueprint = Blueprint('map_bp', __name__, template_folder='templates')
@@ -11,7 +14,18 @@ map_blueprint = Blueprint('map_bp', __name__, template_folder='templates')
 
 @map_blueprint.route('/form')
 def form():
-    return render_template('form.html')
+    sp = spotipy.Spotify(
+        auth_manager=SpotifyOAuth(
+            cache_handler=get_cache_handler(),
+            scope=current_app.config['SPOTIFY_SCOPE'],
+            client_id=current_app.config['SPOTIFY_CLIENT_ID'],
+            client_secret=current_app.config['SPOTIFY_CLIENT_SECRET'],
+            redirect_uri=current_app.config['SPOTIFY_REDIRECT_URI']
+        ), 
+    )
+    if not sp.auth_manager.validate_token(get_cache_handler().get_cached_token()):
+        return redirect('/')
+    return render_template('form.html', name=sp.me()['display_name'])
 
 @map_blueprint.route('/request', methods=['GET','POST'])
 def get_distance():
