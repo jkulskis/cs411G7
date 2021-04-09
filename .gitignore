@@ -25,6 +25,6 @@ htmlcov/
 .coverage.*
 *,cover
 
-instance/
+instance/config.py
 .flask_session
 .spotify_caches
