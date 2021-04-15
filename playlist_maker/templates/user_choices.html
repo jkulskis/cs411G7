@@ -1,0 +1,11 @@
+{% if user_choices %}-----{% endif %}
+{% if user_choices.get('origin') %}
+  <p><i>Origin</i>: {{ user_choices['origin'] }}</p>
+{% endif %}
+{% if user_choices.get('destination') %}
+  <p><i>Destination</i>: {{ user_choices['destination'] }}</p>
+{% endif %}
+{% if user_choices.get('mot') %}
+  <p><i>Mode of Transport</i>: {{ user_choices['mot'] }}</p>
+{% endif %}
+{% if user_choices %}-----{% endif %}

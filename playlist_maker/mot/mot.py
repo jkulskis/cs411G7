@@ -1,5 +1,5 @@
 import googlemaps
-from flask import Blueprint, request, redirect, render_template, current_app, session
+from flask import Blueprint, request, redirect, render_template, current_app, session, url_for
 from playlist_maker.spotify.spotify import SpotifyHandler
 
 mot_blueprint = Blueprint('mot_bp', __name__, template_folder='templates')
@@ -12,25 +12,20 @@ def form():
   if request.method == "GET":
     return render_template(
       'mot.html', 
-      name=spotify.me()['display_name']
+      name=session['display_name'],
+      user_choices=session['user_choices']
     )
   # POST
   if 'walking' in request.form:
-    session['mot'] = 'walking'
+    session['user_choices']['mot'] = 'walking'
   elif 'driving' in request.form:
-    session['mot'] = 'driving'
+    session['user_choices']['mot'] = 'driving'
   elif 'biking' in request.form:
-    session['mot'] = 'biking'
+    session['user_choices']['mot'] = 'biking'
   else: # something wrong happened. render mot page again
     return render_template(
       'mot.html', 
-      name=spotify.me()['display_name']
+      name=session['display_name'],
+      user_choices=session['user_choices']
     )
-  return f"""
-  <h1>Speed page</h1>
-  Origin: {session['origin']}
-  <br>
-  Destination: {session['destination']}
-  <br>
-  Mode of transport: {session['mot']}
-  """
+  return redirect(url_for("morp_bp.form")) 

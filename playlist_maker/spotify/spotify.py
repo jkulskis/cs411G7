@@ -44,6 +44,7 @@ class SpotifyHandler(Spotify):
       os.makedirs(current_app.config['SPOTIFY_CACHES_DIR'])
     if not session.get('uuid'):
       session['uuid'] = str(uuid.uuid4()) # Unknown user for the handler, give random ID
+      session['user_choices'] = {} # set up dict for user choices
     cache_path = f"{current_app.config['SPOTIFY_CACHES_DIR']}/{session.get('uuid')}"
     return CacheFileHandler(cache_path=cache_path)
 

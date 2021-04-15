@@ -13,13 +13,12 @@ def form():
   if request.method == "GET":
     return render_template(
       'mapping.html', 
-      name=spotify.me()['display_name'],
-      origin=session['origin'] if session['origin'] else '',
-      destination=session['destination'] if session['destination'] else ''
+      name=session['display_name'],
+      user_choices=session['user_choices']
     )
   # POST
-  session['origin'] = request.form['origin']
-  session['destination'] = request.form['destination']
+  session['user_choices']['origin'] = request.form['origin']
+  session['user_choices']['destination'] = request.form['destination']
   return redirect(url_for("mot_bp.form")) 
 
 # NOTE: Kept this here, but this is more to just test the google api for now

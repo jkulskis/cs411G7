@@ -5,6 +5,7 @@ from flask_session import Session
 from playlist_maker.home.home import home_blueprint
 from playlist_maker.maps.mapping import map_blueprint
 from playlist_maker.mot.mot import mot_blueprint
+from playlist_maker.morp.morp import morp_blueprint
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -18,4 +19,5 @@ def create_app():
     app.register_blueprint(home_blueprint) # home to help login if not already logged in
     app.register_blueprint(map_blueprint) # map...choose start and end destinations
     app.register_blueprint(mot_blueprint) # mode of transport (walking, driving, biking)
+    app.register_blueprint(morp_blueprint) # morp = music or podcast
     return app
