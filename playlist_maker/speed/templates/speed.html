@@ -11,12 +11,10 @@
     {% if user_choices.get('mot') %}
         <p><i>Mode of Transport</i>: {{ user_choices['mot'] }}</p>
     {% endif %}
-    {% if user_choices.get('speed') %}
-        <p><i>Speed</i>: {{ user_choices['speed'] }}</p>
-    {% endif %}
     {% if user_choices %}-----{% endif %}
     <form action="" method="POST">
-        <input type="submit" name="music" value="Music">
-        <input type="submit" name="podcast" value="Podcast">
+        <input type="submit" name="slower" value="Slower">
+        <input type="submit" name="normal" value="Normal">
+        <input type="submit" name="faster" value="Faster">
     </form>
 {% endblock %}

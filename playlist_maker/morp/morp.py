@@ -35,5 +35,7 @@ def form():
   <br>
   <i>Mode of transport</i>: {session['user_choices']['mot']}
   <br>
+  <i>Speed</i>: {session['user_choices']['speed']}
+  <br>
   <i>Music or Podcast</i>: {session['user_choices']['morp']}
   """
