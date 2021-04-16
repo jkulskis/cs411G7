@@ -24,5 +24,6 @@ def callback():
     if request.args.get("code"): # code in args, grab it and add to auth
         # Being redirected from Spotify auth page. Grab token and redirect to map
         spotify.auth_manager.get_access_token(request.args.get("code"))
+        session['display_name'] = spotify.me()['display_name']
         return redirect(url_for("map_bp.form"))
     return redirect('/') # no code, something went wrong. Redirect back to home
