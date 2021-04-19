@@ -67,4 +67,3 @@ class SpotifyHandler(Spotify):
 
   # add playlist creation function here
 
-  def
