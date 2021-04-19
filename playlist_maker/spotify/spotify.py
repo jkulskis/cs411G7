@@ -57,7 +57,7 @@ class SpotifyHandler(Spotify):
         client_secret=current_app.config['SPOTIFY_CLIENT_SECRET'],
         redirect_uri=current_app.config['SPOTIFY_REDIRECT_URI']
     )
-  
+
   def valid_token(self):
     """Returns true if the oauth token is valid, false otherwise
     """
@@ -65,3 +65,6 @@ class SpotifyHandler(Spotify):
       return False
     return True
 
+  # add playlist creation function here
+
+  def
