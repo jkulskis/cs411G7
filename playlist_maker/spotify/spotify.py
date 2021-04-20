@@ -106,7 +106,10 @@ class SpotifyHandler(Spotify):
     while (time_remaining > 0):
       # if shortest song is longer than the remaining time, end playlist creation
       # because we've gotten as close as we can get to the desired playlist length
-      if current_track_df.max(axis=0)['duration'] > time_remaining:
+      # however, this will make the playlist slightly shorter than the desired length
+      # and we could change the logic where we append this short song at the end
+      # and have the playlist always be slightly longer than desired
+      if current_track_df.min(axis=0)['duration'] > time_remaining:
         time_remaining = 0
       else: # if there's still songs that can fit in the remain time, continue with the function
         # keep only songs that are less than or equal to the time remaining
