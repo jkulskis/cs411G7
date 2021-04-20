@@ -3,6 +3,8 @@ import uuid
 
 from spotipy import SpotifyOAuth, Spotify, CacheHandler, CacheFileHandler
 from flask import session, current_app
+# from spomato import spomato
+import pandas as pd
 
 # NOTE: Could also do RedisCacheHandler if we want to use Redis instead
 class MongoCacheHandler(CacheHandler):
@@ -28,7 +30,7 @@ and check if the token is valid. We turn the following code:
 into:
 
   spotify = SpotifyHandler()
-  if not spotify.valid():
+  if not spotify.valid_token():
     return redirect('/')
 
 This helps a lot since we need to grab from the spotify cache and initiate an object
@@ -58,6 +60,10 @@ class SpotifyHandler(Spotify):
         redirect_uri=current_app.config['SPOTIFY_REDIRECT_URI']
     )
 
+  # def create_spomato(self):
+  #   spomato = spomato.Spomato(access_token=self.get_cache_handler().get_cached_token())
+  #   return spomato
+
   def valid_token(self):
     """Returns true if the oauth token is valid, false otherwise
     """
@@ -65,5 +71,63 @@ class SpotifyHandler(Spotify):
       return False
     return True
 
-  # add playlist creation function here
+  # get songs to chose from
+  def get_songs(self, weather_details):
+    if weather_details.lower() == "clear":
+      genres = ['happy','summer']
+    else:
+      genres = ['chill', 'rainy-day']
+    # if speed == "slower":
+    #   energy = 0.3
+    # elif speed == "normal":
+    #   energy = 0.5
+    # else:
+    #   energy = 0.7
+    recs = self.recommendations(seed_genres=genres,limit=5, max_duration_ms=360000, min_popularity=50)
+
+    track_list = []
+    tracks = recs['tracks']
+    for track in tracks:
+      track_id = track['id']
+      duration = track['duration_ms']/1000
+      track_list.append([track_id, duration])
+      # could add filtering by market too
+
+    track_df = pd.DataFrame(track_list, columns=['id','duration'])
+    return track_df
+
+  def curate_songs(self,track_df,length):
+    time_remaining = length
+    total_time = 0
+    chosen_tracks = []
+    og_track_df = track_df
+    current_track_df = track_df
+    
+    while (time_remaining > 0):
+      # if shortest song is longer than the remaining time, end playlist creation
+      # because we've gotten as close as we can get to the desired playlist length
+      if current_track_df.max(axis=0)['duration'] > time_remaining:
+        time_remaining = 0
+      else: # if there's still songs that can fit in the remain time, continue with the function
+        # keep only songs that are less than or equal to the time remaining
+        current_track_df = current_track_df[current_track_df.duration <= (time_remaining)]
+        if current_track_df.empty: # would hit this point if user needed a playlist so long that we need repeats
+          current_track_df = og_track_df # will start having repeats
+
+        track = current_track_df.sample().iloc[0]
+        current_track_df = current_track_df[current_track_df.id != track.id]
+        chosen_tracks.append(track.id)
+        total_time += track.duration
+        time_remaining = length - total_time
+    return chosen_tracks, total_time
+
+  def create_playlist(self, user_id, chosen_songs):
+    new_playlist_name = 'sample'
+    self.user_playlist_create(user=user_id, name=new_playlist_name)
+    playlists = self.user_playlists(user_id)
+    for playlist in playlists['items']:
+      if playlist['name'] == new_playlist_name:
+        playlist_id = playlist['id']
+    self.user_playlist_add_tracks(user_id, playlist_id, chosen_songs)
+    return self.playlist(playlist_id)
 

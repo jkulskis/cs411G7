@@ -21,6 +21,12 @@ def form():
   # POST
   if 'music' in request.form:
     session['user_choices']['morp'] = 'music'
+    possible_songs = spotify.get_songs(weather_details)
+     # create a playlist that's 10 minutes long
+    chosen_songs, total_time = spotify.curate_songs(possible_songs,600)
+    user_id = session['user_id']
+    final_playlist = spotify.create_playlist(user_id, chosen_songs)
+
   elif 'podcast' in request.form:
     session['user_choices']['morp'] = 'podcast'
   else: # something wrong happened. render mot page again
@@ -45,4 +51,12 @@ def form():
   <i>Temperature</i>: {temp}
   <br>
   <i>Weather</i>: {weather_details}
+  <br>
+  <i>Song recs</i>: {possible_songs}
+  <br>
+  <i>Chosen songs</i>: {chosen_songs}
+  <br>
+  <i>Total time</i>: {total_time}
+  <br>
+  <i>Playlist<i/>: {final_playlist}
   """

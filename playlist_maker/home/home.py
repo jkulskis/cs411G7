@@ -12,6 +12,7 @@ def home():
     if request.args.get("code"): # code in args, grab it and add to auth
         spotify.auth_manager.get_access_token(request.args.get("code"))
     session['display_name'] = spotify.me()['display_name']
+    session['user_id'] = spotify.me()['id']
     # go straight to map, already signed in
     return redirect(url_for("map_bp.form")) 
 
