@@ -83,7 +83,7 @@ class SpotifyHandler(Spotify):
     #   energy = 0.5
     # else:
     #   energy = 0.7
-    recs = self.recommendations(seed_genres=genres,limit=20, max_duration_ms=360000, min_popularity=50)
+    recs = self.recommendations(seed_genres=genres,limit=100, max_duration_ms=360000, min_popularity=50)
 
     track_list = []
     tracks = recs['tracks']
@@ -104,14 +104,16 @@ class SpotifyHandler(Spotify):
     current_track_df = track_df
     
     while (time_remaining > 0):
-      # if shortest song is longer than the remaining time, add that song and end playlist creation
-      # because we've gotten as close as we can get to the desired playlist length
-      # I figured that a user would rather have a playlist that's a little too long instead of a little too short
+      # if shortest song is longer than the remaining time, we have two options:
+      # either end playlist creation there (playlist runs short)
+      # or add that song and end playlist creation (playlist runs long)
+      # the drive has a sheet with an analysis, and we get closer to the desired length if we run short
+      # however, I left the code to have the playlist run long here in case we decide to go with that
       if current_track_df.min(axis=0)['duration'] > time_remaining:
-        track = current_track_df[current_track_df.duration == current_track_df.duration.min()].iloc[0]
-        chosen_tracks.append(track.id)
-        total_time += track.duration
-        # chosen_tracks.append(current_track_df[current_track_df.duration == current_track_df.duration.min()].id)
+        # UNCOMMENT NEXT 3 LINES TO HAVE PLAYLIST RUN LONG
+        # track = current_track_df[current_track_df.duration == current_track_df.duration.min()].iloc[0]
+        # chosen_tracks.append(track.id)
+        # total_time += track.duration
         time_remaining = 0
       else: # if there's still songs that can fit in the remain time, continue with the function
         # keep only songs that are less than or equal to the time remaining
@@ -127,7 +129,7 @@ class SpotifyHandler(Spotify):
     return chosen_tracks, total_time
 
   def create_playlist(self, user_id, chosen_songs):
-    new_playlist_name = 'longer5'
+    new_playlist_name = 'shorter10'
     self.user_playlist_create(user=user_id, name=new_playlist_name)
     playlists = self.user_playlists(user_id)
     for playlist in playlists['items']:
