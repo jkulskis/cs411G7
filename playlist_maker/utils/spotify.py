@@ -1,10 +1,10 @@
 import os
 import uuid
+import pandas as pd
 
 from spotipy import SpotifyOAuth, Spotify, CacheHandler, CacheFileHandler
 from flask import session, current_app
-# from spomato import spomato
-import pandas as pd
+from datetime import datetime
 
 # NOTE: Could also do RedisCacheHandler if we want to use Redis instead
 class MongoCacheHandler(CacheHandler):
@@ -60,10 +60,6 @@ class SpotifyHandler(Spotify):
         redirect_uri=current_app.config['SPOTIFY_REDIRECT_URI']
     )
 
-  # def create_spomato(self):
-  #   spomato = spomato.Spomato(access_token=self.get_cache_handler().get_cached_token())
-  #   return spomato
-
   def valid_token(self):
     """Returns true if the oauth token is valid, false otherwise
     """
@@ -72,38 +68,46 @@ class SpotifyHandler(Spotify):
     return True
 
   # get songs to chose from
-  def get_songs(self, weather_details):
-    if weather_details.lower() == "clear":
+  def get_songs(self, weather_status=None):
+    """Get a possible list of songs based on the weather status
+
+    Args:
+        weather_status: String describing the weather
+
+    Returns:
+        pandas df: dataframe with track ids/durations in seconds
+    """
+    if weather_status == "clear":
       genres = ['happy','summer']
     else:
       genres = ['chill', 'rainy-day']
-    # if speed == "slower":
-    #   energy = 0.3
-    # elif speed == "normal":
-    #   energy = 0.5
-    # else:
-    #   energy = 0.7
-    recs = self.recommendations(seed_genres=genres,limit=100, max_duration_ms=360000, min_popularity=50)
+    recs = self.recommendations(
+      seed_genres=genres,
+      limit=100, 
+      max_duration_ms=600000, # at a maximum, have a 10 minute track
+      min_popularity=20 # popularity in [0, 100]
+    )
+    track_list = [(track['id'], track['duration_ms']/1000) for track in recs['tracks']]
+    return pd.DataFrame(track_list, columns=['id', 'duration'])
 
-    track_list = []
-    tracks = recs['tracks']
-    for track in tracks:
-      track_id = track['id']
-      duration = track['duration_ms']/1000
-      track_list.append([track_id, duration])
-      # could add filtering by market too
+  def curate_songs(self, track_df, length):
+    """Curate the songs so that we end up with a list of track ids that are
+    close to the time length
 
-    track_df = pd.DataFrame(track_list, columns=['id','duration'])
-    return track_df
+    Args:
+      track_df: Pandas df of tracks created in get_songs
+      length: Desired playlist length in seconds
 
-  def curate_songs(self,track_df,length):
+    Returns:
+      list: track ids
+    """
     time_remaining = length
     total_time = 0
     chosen_tracks = []
     og_track_df = track_df
     current_track_df = track_df
     
-    while (time_remaining > 0):
+    while time_remaining > 0:
       # if shortest song is longer than the remaining time, we have two options:
       # either end playlist creation there (playlist runs short)
       # or add that song and end playlist creation (playlist runs long)
@@ -120,7 +124,6 @@ class SpotifyHandler(Spotify):
         current_track_df = current_track_df[current_track_df.duration <= (time_remaining)]
         if current_track_df.empty: # would hit this point if user needed a playlist so long that we need repeats
           current_track_df = og_track_df # will start having repeats
-
         track = current_track_df.sample().iloc[0]
         current_track_df = current_track_df[current_track_df.id != track.id]
         chosen_tracks.append(track.id)
@@ -128,13 +131,16 @@ class SpotifyHandler(Spotify):
         time_remaining = length - total_time
     return chosen_tracks, total_time
 
-  def create_playlist(self, user_id, chosen_songs):
-    new_playlist_name = 'shorter10'
-    self.user_playlist_create(user=user_id, name=new_playlist_name)
-    playlists = self.user_playlists(user_id)
-    for playlist in playlists['items']:
-      if playlist['name'] == new_playlist_name:
-        playlist_id = playlist['id']
+  def create_playlist(self, weather_status, duration):
+    # find the possible songs df using the weather
+    possible_songs_df = self.get_songs(weather_status=weather_status)
+    # create a playlist that is close to duration seconds long
+    chosen_songs, total_time = self.curate_songs(track_df=possible_songs_df, length=duration)
+    new_playlist_name = f'Playlist Maker: {datetime.now().strftime("%D - %H:%M:%S")}'
+    user_id = self.me()['id']
+    playlist_id = self.user_playlist_create(
+      user=user_id,
+      name=new_playlist_name
+    )['id'] # grab the playlist ID from the json returned with info of the new playlist
     self.user_playlist_add_tracks(user_id, playlist_id, chosen_songs)
-    return self.playlist(playlist_id)
-
+    return self.playlist(playlist_id), total_time

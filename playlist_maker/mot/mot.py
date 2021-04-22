@@ -1,6 +1,6 @@
 import googlemaps
 from flask import Blueprint, request, redirect, render_template, current_app, session, url_for
-from playlist_maker.spotify.spotify import SpotifyHandler
+from playlist_maker.utils.spotify import SpotifyHandler
 
 mot_blueprint = Blueprint('mot_bp', __name__, template_folder='templates')
 

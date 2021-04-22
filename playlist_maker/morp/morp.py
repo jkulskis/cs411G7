@@ -1,6 +1,5 @@
 from flask import Blueprint, request, redirect, render_template, current_app, session, url_for
-from playlist_maker.spotify.spotify import SpotifyHandler
-from playlist_maker.weather.weather import get_weather
+from playlist_maker.utils.spotify import SpotifyHandler
 
 morp_blueprint = Blueprint('morp_bp', __name__, template_folder='templates')
 
@@ -16,47 +15,15 @@ def form():
       user_choices=session['user_choices']
     )
   
-  temp, weather_details = get_weather()
-
   # POST
   if 'music' in request.form:
     session['user_choices']['morp'] = 'music'
-    possible_songs = spotify.get_songs(weather_details)
-     # create a playlist that's 10 minutes long
-    chosen_songs, total_time = spotify.curate_songs(possible_songs,600)
-    user_id = session['user_id']
-    final_playlist = spotify.create_playlist(user_id, chosen_songs)
-
   elif 'podcast' in request.form:
     session['user_choices']['morp'] = 'podcast'
-  else: # something wrong happened. render mot page again
+  else: # something wrong happened. Render morp page again
     return render_template(
       'morp.html', 
       name=session['display_name'],
       user_choices=session['user_choices']
     )
-  # for now just display the data
-  return f"""
-  <h1>Data Crunching Time :P</h1>
-  <i>Origin</i>: {session['user_choices']['origin']}
-  <br>
-  <i>Destination</i>: {session['user_choices']['destination']}
-  <br>
-  <i>Mode of transport</i>: {session['user_choices']['mot']}
-  <br>
-  <i>Speed</i>: {session['user_choices']['speed']}
-  <br>
-  <i>Music or Podcast</i>: {session['user_choices']['morp']}
-  <br>
-  <i>Temperature</i>: {temp}
-  <br>
-  <i>Weather</i>: {weather_details}
-  <br>
-  <i>Song recs</i>: {possible_songs}
-  <br>
-  <i>Chosen songs</i>: {chosen_songs}
-  <br>
-  <i>Total time</i>: {total_time}
-  <br>
-  <i>Playlist<i/>: {final_playlist}
-  """
+  return redirect(url_for("playlist_bp.get_playlist")) 
