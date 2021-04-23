@@ -26,5 +26,6 @@ htmlcov/
 *,cover
 
 instance/config.py
+backend/instance/config.py
 .flask_session
 .spotify_caches
