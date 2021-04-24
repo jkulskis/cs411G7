@@ -21,11 +21,11 @@ def form():
   elif 'driving' in request.form:
     session['user_choices']['mot'] = 'driving'
   elif 'biking' in request.form:
-    session['user_choices']['mot'] = 'biking'
+    session['user_choices']['mot'] = 'bicycling'
   else: # something wrong happened. render mot page again
     return render_template(
       'mot.html', 
       name=session['display_name'],
       user_choices=session['user_choices']
     )
-  return redirect(url_for("playlist_bp.get_playlist")) 
+  return redirect(url_for("speed_bp.form")) 

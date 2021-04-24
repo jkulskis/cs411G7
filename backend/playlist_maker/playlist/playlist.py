@@ -49,6 +49,8 @@ def get_playlist():
   <br>
   <i>Mode of transport</i>: {session['user_choices']['mot']}
   <br>
+  <i>Actual duration</i>: {session['duration']}
+  <br>
   <i>Speed</i>: {session['user_choices']['speed']}
   <br>
   <i>Temperature</i>: {origin.temperature}
