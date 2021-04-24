@@ -11,7 +11,7 @@ from playlist_maker.playlist.playlist import playlist_blueprint
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_pyfile('config.py') # need to make your own config file
+    app.config.from_pyfile('backend/instance/config.py') # need to make your own config file
 
     app.config['SECRET_KEY'] = os.urandom(64)
     app.config['SESSION_TYPE'] = 'filesystem'
