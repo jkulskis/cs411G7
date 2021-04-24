@@ -6,7 +6,7 @@ The current app folder is called *playlist_maker* but we can change this in the 
 up with a better name.
 
 ## Setting up a development environment
-Make sure that all API keys and sensitive info are stored in `instance/config.py`
+Make sure that all API keys and sensitive info are stored in `backend/instance/config.py`
 
 While developing the application, it can be helpful to setup a python virtual environment for package management.
 
@@ -44,9 +44,13 @@ Now when you use python, it should be from the venv source, so your environment 
 
 Once you are done with the venv, you can leave it by running `deactivate`
 
-## Installing the flask app for development
+## FOR BACKEND: Running the backend server
 
-After you have activated your venv, run
+After you have activated your venv, go into the backend directory with 
+
+`cd backend`
+
+then run
 
 `python setup.py install develop`
 
