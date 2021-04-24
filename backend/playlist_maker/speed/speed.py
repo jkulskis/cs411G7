@@ -17,7 +17,7 @@ def form():
     )
   # POST
   if 'slower' in request.form:
-    session['user_choices']['speed'] = 'walking'
+    session['user_choices']['speed'] = 'slower'
   elif 'normal' in request.form:
     session['user_choices']['speed'] = 'normal'
   elif 'faster' in request.form:
@@ -28,4 +28,4 @@ def form():
       name=session['display_name'],
       user_choices=session['user_choices']
     )
-  return redirect(url_for("morp_bp.form")) 
+  return redirect(url_for("playlist_bp.get_playlist")) 

@@ -28,4 +28,4 @@ def form():
       name=session['display_name'],
       user_choices=session['user_choices']
     )
-  return redirect(url_for("speed_bp.form")) 
+  return redirect(url_for("playlist_bp.get_playlist")) 

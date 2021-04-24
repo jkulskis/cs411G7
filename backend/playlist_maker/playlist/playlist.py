@@ -4,11 +4,18 @@ from playlist_maker.utils.location import Location
 
 playlist_blueprint = Blueprint('playlist_bp', __name__, template_folder='templates')
 
-@playlist_blueprint.route('/playlist', methods=['GET'])
+@playlist_blueprint.route('/playlist', methods=['GET','POST'])
 def get_playlist():
   spotify = SpotifyHandler()
   if not spotify.valid_token():
     return redirect('/')
+  if request.method == "GET":
+    return render_template(
+      'playlist.html', 
+      name=session['display_name'],
+      user_choices=session['user_choices']
+    )
+  # POST
   # At this point, we should have all of the user data that we
   # need to form the playlist
 
@@ -43,8 +50,6 @@ def get_playlist():
   <i>Mode of transport</i>: {session['user_choices']['mot']}
   <br>
   <i>Speed</i>: {session['user_choices']['speed']}
-  <br>
-  <i>Music or Podcast</i>: {session['user_choices']['morp']}
   <br>
   <i>Temperature</i>: {origin.temperature}
   <br>

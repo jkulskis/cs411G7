@@ -16,6 +16,8 @@ class Location:
       self.get_geocode_data()
   
   def get_geocode_data(self):
+    """Converts addresses into geographic coordinates
+    """
     gmaps = googlemaps.Client(key=current_app.config['GOOGLE_API_KEY'])
     self.geocode = gmaps.geocode(self.address)
     self.lat = self.geocode[0]["geometry"]["location"]["lat"]
