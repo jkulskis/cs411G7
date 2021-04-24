@@ -4,6 +4,13 @@ from flask import current_app
 
 class Location:
   # TODO: Add error handling for invalid responses (e.g. bad addresses)
+  # Jamie note: Looking it up, it doesn't seem like there's an easy way for us to filter out
+  # bad addresses that are formatted like a real one (for example, Google's API doesn't do address validation)
+  # I tried inputting a Boston address that doesn't exist but formatted like a real address
+  # '111 Quiet Corral Lane, Boston, MA 02215' doesn't exist, but the API still treated it like a real one
+  # However, inputting something like '5' will cause an error
+  # so the best we can do is filter out stuff like that that's very obviously wrong
+  # thoughts?
 
   def __init__(self, address=None, init_geo=True):
     self.address = address
@@ -38,6 +45,8 @@ class Location:
     return distance_matrix["rows"][0]["elements"][0]["duration"]["value"]
   
   # TODO: Better weather status for our data crunching. As of now it is just clear/bad
+  # Jamie note: What extra details would you want to add? I only did clear/bad since i just created  
+  # good weather & bad weather genre seeds. Are there others you'd want to add?
   def weather_now(self):
     """Grabs the weather for the location, assuming that
     """
