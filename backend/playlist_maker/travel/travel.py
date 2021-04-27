@@ -1,5 +1,5 @@
 import googlemaps
-from flask import Blueprint, request, redirect, render_template, current_app, session, url_for
+from flask import Blueprint, request, redirect, render_template, current_app, session, url_for, jsonify
 from playlist_maker.utils.spotify import SpotifyHandler
 
 travel_blueprint = Blueprint('travel_bp', __name__, template_folder='templates')
