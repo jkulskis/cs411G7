@@ -1,0 +1,67 @@
+.app{
+  background: lightblue;
+}
+
+body {
+  font-family: Calibri, Helvetica, sans-serif;
+  background-color: #778aab;
+}
+  
+.container {
+  padding: 50px;
+  background-color: #eeddcc;
+}
+
+div {
+  padding: 10px 0;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+  
+input[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+  
+input[type=text]:focus {
+  background-color: #B0B8B4FF;
+  outline: none;
+}
+  
+hr {
+  border: 1px solid #778aab;
+  /* #f1f1f1;   */
+  margin-bottom: 25px;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  margin:0 0.3em 0.3em 0;
+  border-radius:12px;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#FFFFFF;
+  text-align:center;
+  transition: all 0.2s;
+  background-color: #778aab;
+} 
+
+.button:hover {
+  color:#000000;
+  background-color:#FFFFFF;
+}
+
+@media all and (max-width:30em){
+   .button{
+    display:block;
+    margin:0.4em auto;
+  }
+}
