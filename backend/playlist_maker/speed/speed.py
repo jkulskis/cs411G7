@@ -1,5 +1,5 @@
 import googlemaps
-from flask import Blueprint, request, redirect, render_template, current_app, session, url_for
+from flask import Blueprint, request, redirect, render_template, current_app, session, url_for, jsonify
 from playlist_maker.utils.spotify import SpotifyHandler
 
 speed_blueprint = Blueprint('speed_bp', __name__, template_folder='templates')
@@ -8,24 +8,23 @@ speed_blueprint = Blueprint('speed_bp', __name__, template_folder='templates')
 def form():
   spotify = SpotifyHandler()
   if not spotify.valid_token():
-    return redirect('/')
+    return jsonify("Access Denied"), 401
   if request.method == "GET":
-    return render_template(
-      'speed.html', 
-      name=session['display_name'],
-      user_choices=session['user_choices']
-    )
+    return jsonify(dict(session)), 200
   # POST
-  if 'slower' in request.form:
+  speed = request.args.get('speed')
+  if speed == 'slower':
     session['user_choices']['speed'] = 'slower'
-  elif 'normal' in request.form:
+  elif speed == 'normal':
     session['user_choices']['speed'] = 'normal'
-  elif 'faster' in request.form:
+  elif speed == 'faster':
     session['user_choices']['speed'] = 'faster'
-  else: # something wrong happened. render mot page again
-    return render_template(
-      'speed.html', 
-      name=session['display_name'],
-      user_choices=session['user_choices']
-    )
-  return redirect(url_for("playlist_bp.get_playlist")) 
+  else: # invalid request args
+    return jsonify({
+      'display_name': session['display_name'],
+      'user_choices': session['user_choices']
+    }), 400
+  return jsonify({
+    'display_name': session['display_name'],
+    'user_choices': session['user_choices']
+  }), 200

@@ -8,14 +8,24 @@ travel_blueprint = Blueprint('travel_bp', __name__, template_folder='templates')
 def form():
   spotify = SpotifyHandler()
   if not spotify.valid_token():
-    return redirect('/')
+    return jsonify("Access Denied"), 401
   if request.method == "GET":
-    return render_template(
-      'travel.html', 
-      name=session['display_name'],
-      user_choices=session['user_choices']
-    )
+    return jsonify({
+      'display_name': session['display_name'],
+      'user_choices': session['user_choices']
+    }), 200
   # POST
-  session['user_choices']['origin'] = request.form['origin']
-  session['user_choices']['destination'] = request.form['destination']
-  return redirect(url_for("mot_bp.form")) 
+  origin = request.args.get('origin')
+  destination = request.args.get('destination')
+  if origin and destination:
+    session['user_choices']['origin'] = origin
+    session['user_choices']['destination'] = destination
+    return jsonify({
+      'display_name': session['display_name'],
+      'user_choices': session['user_choices']
+    }), 200
+  # need origin & destination args
+  return jsonify({
+    'display_name': session['display_name'],
+    'user_choices': session['user_choices']
+  }), 400
