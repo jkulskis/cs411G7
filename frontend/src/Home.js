@@ -19,12 +19,13 @@ function Home() {
         } else if (response.status === 200) {
           // logged in already
           history.push("/page1");
+          return response.json();
         } else {
           console.log("Error");
         }
       })
       .then((data) => {
-        if (data) {
+        if (data && "auth_url" in data) {
           // open auth url popup
           let windowref = window.open(
             data.auth_url,
@@ -52,6 +53,10 @@ function Home() {
               });
             }
           }, 500);
+        } else if (data) {
+          localStorage.clear();
+          localStorage.setItem('display_name', data.display_name);
+          console.log(localStorage);
         }
       });
   }
