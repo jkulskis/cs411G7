@@ -1,38 +1,129 @@
-.App {
+@import url(https://fonts.googleapis.com/css?family=Krona+One);
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+* {
+  font-family:'Poppins';
+}
+
+.app{
+  background: rgb(68, 125, 82);
+}
+
+body {
+  font-family: 'Poppins';
+  background-color: whitesmoke;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  
+.container {
+  padding: 50px;
+  background-color: rgb(220, 234, 231);
+  border-radius: 10px;
+  box-shadow: black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+div {
+  padding: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+  
+input[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+  
+input[type=text]:focus {
+  background-color: white;
+  outline: none;
+  border: 2px #F2D1EF;
+  font-family: 'Poppins';
+}
+  
+hr {
+  border: 2px dotted #2F5451;
+  /* #f1f1f1;   */
+  margin-bottom: 25px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h1 {
+  font-family: 'Krona One';
+  font-size: 45px;
 }
 
-.App-link {
-  color: #61dafb;
+h2 {
+  font-family: 'Krona One';
+  font-size: 30px;
+  color: #2F5451;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+p,
+label {
+  font-size: 20px;
+  font: 'Poppins-Regular';
+  color: #2F5451;
+}
+
+.button,
+.buttonforms,
+.buttonstartover,
+.buttonback {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  margin:0 0.3em 0.3em 0;
+  border-radius: 2px;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Poppins';
+  font-size: 16px;
+  color: black;
+  text-align:center;
+  transition: all 0.2s;
+  border: 20px rgb(93, 116, 102);
+  background-color: white;
+  height: 50px;
+  width: 200px;
+  cursor: pointer;
+} 
+
+.button:hover {
+  color:#000000;
+  background-color: #96CC95;
+}
+
+.buttonforms:hover{
+  color:#000000;
+  background-color: #1DB954;
+}
+
+.buttonstartover:hover,
+.buttonback:hover {
+  color:#000000;
+  background-color: #F2D1EF;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 36px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+@media all and (max-width:30em){
+   .button{
+    display:block;
+    margin:0.4em auto;
   }
 }
