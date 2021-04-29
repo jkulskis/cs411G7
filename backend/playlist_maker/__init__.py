@@ -14,14 +14,18 @@ def create_app():
     app.config.from_pyfile('config.py') # need to make your own config file
 
     app.config['SECRET_KEY'] = os.urandom(64)
-    # session redis
-    app.config['SESSION_TYPE'] = 'redis'
     app.config['SESSION_PERMANENT'] = False
     app.config['SESSION_USE_SIGNER'] = True
-    app.config['SESSION_REDIS'] = redis.from_url('redis://localhost:6379')
-    # session filesystem
-    # app.config['SESSION_TYPE'] = 'filesystem'
-    # app.config['SESSION_FILE_DIR'] = './.flask_session/'
+    try:
+        rs = redis.Redis("localhost")
+        rs.ping()
+        # session redis
+        app.config['SESSION_TYPE'] = 'redis'
+        app.config['SESSION_REDIS'] = redis.from_url('redis://localhost:6379')
+    except redis.exceptions.ConnectionError: # if no redis, just cache to filesystem
+        # session filesystem
+        app.config['SESSION_TYPE'] = 'filesystem'
+        app.config['SESSION_FILE_DIR'] = './.flask_session/'
     Session(app) # server-side session to the app. access the Session instance with the session imported from flask
 
     app.register_blueprint(home_blueprint) # home to help login if not already logged in
