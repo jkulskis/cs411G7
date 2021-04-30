@@ -31,8 +31,8 @@ def home():
         return jsonify({
           'auth_url': auth_url
         }), 401
-    if request.args.get("code"): # code in args, grab it and add to auth
-        spotify.auth_manager.get_access_token(request.args.get("code"))
+    if request.json.get("code"): # code in args, grab it and add to auth
+        spotify.auth_manager.get_access_token(request.json.get("code"))
     session['display_name'] = spotify.me()['display_name']
     # go straight to travel, already signed in
     return jsonify({
@@ -47,10 +47,10 @@ def callback():
     """
     spotify = SpotifyHandler()
     check_manual_token(spotify_handler=spotify)
-    if request.args.get("code"): # code in args, grab it and add to auth
+    if request.json.get("code"): # code in args, grab it and add to auth
         # Being redirected from Spotify auth page. Grab token and redirect to travel
-        spotify.auth_manager.get_access_token(request.args.get("code"))
-        print(request.args.get("code"))
+        spotify.auth_manager.get_access_token(request.json.get("code"))
+        print(request.json.get("code"))
         session['display_name'] = spotify.me()['display_name']
     if spotify.valid_token():
         return "<script>window.onload = window.close();</script>" # close login page after successful validation

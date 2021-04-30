@@ -15,7 +15,7 @@ def form():
       'user_choices': session['user_choices']
     }), 200
   # POST
-  mot = request.args.get('mot')
+  mot = request.json.get('mot')
   if mot == 'walking':
     session['user_choices']['mot'] = 'walking'
   elif mot == 'driving':

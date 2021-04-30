@@ -12,7 +12,7 @@ def form():
   if request.method == "GET":
     return jsonify(dict(session)), 200
   # POST
-  speed = request.args.get('speed')
+  speed = request.json.get('speed')
   if speed == 'slower':
     session['user_choices']['speed'] = 'slower'
   elif speed == 'normal':

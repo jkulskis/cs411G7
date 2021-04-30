@@ -15,8 +15,8 @@ def form():
       'user_choices': session['user_choices']
     }), 200
   # POST
-  origin = request.args.get('origin')
-  destination = request.args.get('destination')
+  origin = request.json.get('origin')
+  destination = request.json.get('destination')
   if origin and destination:
     session['user_choices']['origin'] = origin
     session['user_choices']['destination'] = destination
