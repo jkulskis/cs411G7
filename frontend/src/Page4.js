@@ -6,7 +6,7 @@ function Page4() {
     return(
     <form action="/request" method="POST">
         <div className="container">
-            <center><h1>Playlist Generator for Name</h1></center>
+            <center><h1>Playlist Generator for {localStorage["display_name"]}</h1></center>
             <br />
             <br />
             <hr></hr>
