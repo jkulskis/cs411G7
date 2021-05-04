@@ -21,8 +21,14 @@ def check_manual_token(spotify_handler):
           }
         )
 
-@home_blueprint.route("/login")
+@home_blueprint.route("/")
 def home():
+    return jsonify({
+      'app_name': 'Playlist Maker'
+    }), 200
+
+@home_blueprint.route("/login")
+def login():
     spotify = SpotifyHandler()
     check_manual_token(spotify_handler=spotify)
     if not spotify.valid_token(): # no code or code invalid, provide home template asking them to login
