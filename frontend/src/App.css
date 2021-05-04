@@ -58,7 +58,7 @@ h1 {
 h2 {
   font-family: 'Krona One';
   font-size: 30px;
-  color: #ee2568;
+  color: #2F5451;
 }
 
 p,
@@ -100,10 +100,7 @@ label {
   background-color: #96CC95;
 }
 
-/* .buttonforms:focus {
-  background-color: #1DB954;
-} */
-
+.buttonforms:focus,
 .buttonforms.clicked {
   background-color: #1DB954;
 }
