@@ -47,7 +47,6 @@ input[type=text]:focus {
   
 hr {
   border: 2px dotted #2F5451;
-  /* #f1f1f1;   */
   margin-bottom: 25px;
 }
 
@@ -98,6 +97,10 @@ label {
 
 .buttonforms:hover{
   color:#000000;
+  background-color: #96CC95;
+}
+
+.buttonforms:focus {
   background-color: #1DB954;
 }
 

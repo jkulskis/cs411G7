@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import './App.css';
 import {Form, Input, Button} from 'semantic-ui-react';
@@ -6,7 +6,11 @@ import {Form, Input, Button} from 'semantic-ui-react';
 function Page1() {
     const [destination, setDestination] = useState("");
     const [origin, setOrigin] = useState("");
-
+    
+    useEffect(() => {
+        document.title = "Destination"
+    }, []);
+    
     return (
         <Form>
             <div className="container">

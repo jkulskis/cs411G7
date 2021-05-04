@@ -1,8 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import "./App.css";
 
 function Home() {
+
+  useEffect(() => {
+    document.title = "Home"
+  }, []);
+
   const history = useHistory();
   // note: idk how "correct" this code is, I've never really used react. This is just showing an example of how we fetch data
   // from the login entry point of the API. For other pages (like origin/destination, speed, mode of transport) we

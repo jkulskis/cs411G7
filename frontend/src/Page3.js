@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import './App.css';
 import {Form, Button} from 'semantic-ui-react';
 
 function Page3() {
+
+    useEffect(() => {
+        document.title = "Speed"
+     }, []);
+
     const [speed, setSpeed] = useState("");
 
     return (
@@ -20,15 +25,15 @@ function Page3() {
             <br></br>
             <br></br>
             <Form.Field>
-                <input type="buttonforms" className="buttonforms" value="slower" onClick={e => setSpeed(e.target.value)}></input>
-                <input type="buttonforms" className="buttonforms" value="normal" onClick={e => setSpeed(e.target.value)}></input>
-                <input type="buttonforms" className="buttonforms" value="faster" onClick={e => setSpeed(e.target.value)}></input>
+                <button type="buttonforms" className="buttonforms" value="slower" onClick={e => setSpeed(e.target.value)}>Slower</button>
+                <button type="buttonforms" className="buttonforms" value="normal" onClick={e => setSpeed(e.target.value)}>Normal</button>
+                <button type="buttonforms" className="buttonforms" value="faster" onClick={e => setSpeed(e.target.value)}>Faster</button>
             </Form.Field>
             <br></br>
             <br></br>        
             <br></br>
             <br></br>
-            <Link to="/page1"><button className="buttonback"> Go Back </button></Link>
+            <Link to="/page2"><button className="buttonback"> Go Back </button></Link>
             <Link to="/page4">
                 <Button 
                 onClick={async () => {

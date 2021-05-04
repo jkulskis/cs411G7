@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import './App.css';
 import {Form, Button} from 'semantic-ui-react';
 
 function Page2() {
+
+    useEffect(() => {
+        document.title = "Transportation"
+     }, []);
+
     const [mot, setMot] = useState("");
 
     return (
@@ -20,9 +25,9 @@ function Page2() {
             <br></br>
             <br></br>
             <Form.Field>
-                <input type="buttonforms" className="buttonforms" value="walking" onClick={e => setMot(e.target.value)}></input>
-                <input type="buttonforms" className="buttonforms" value="biking" onClick={e => setMot(e.target.value)}></input>
-                <input type="buttonforms" className="buttonforms" value="driving" onClick={e => setMot(e.target.value)}></input>
+                <button type="buttonforms" className="buttonforms" value="walking" onClick={e => setMot(e.target.value)}>Walking</button>
+                <button type="buttonforms" className="buttonforms" value="biking" onClick={e => setMot(e.target.value)}>Biking</button>
+                <button type="buttonforms" className="buttonforms" value="driving" onClick={e => setMot(e.target.value)}>Driving</button>
             </Form.Field>
             <br></br>
             <br></br>        
@@ -34,8 +39,6 @@ function Page2() {
                 onClick={async () => {
                     let data = {mot:mot};
                     console.log(data)
-                    let mode = mot;
-                    console.log(mode)
                     await fetch('/mot', {
                         method: 'POST',
                         headers: {
