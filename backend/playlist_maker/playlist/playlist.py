@@ -26,6 +26,18 @@ def get_playlist():
     session['duration'] *= 1.2 # 20% speed increase
   elif session['user_choices']['speed'] == 'slower':
     session['duration'] *= 0.2 # 20% speed decrease
+  if session['duration'] > 48*60*60: # must be less than 48 hours
+    return jsonify({
+      'display_name': session['display_name'],
+      'user_choices': session['user_choices'],
+    }), 400
+  print(session['duration'])
+  if session['duration'] < 30: # no 30 second trips
+    return jsonify({
+      'display_name': session['display_name'],
+      'user_choices': session['user_choices'],
+    }), 501
+
   # get the weather status at the origin for our weather data
   session['weather_status'] = origin.weather_now()
   # create the playlist using the spotify handler with the weather and duration constraints

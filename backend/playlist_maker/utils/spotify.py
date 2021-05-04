@@ -110,16 +110,9 @@ class SpotifyHandler(Spotify):
     current_track_df = track_df
     
     while time_remaining > 0:
-      # if shortest song is longer than the remaining time, we have two options:
-      # either end playlist creation there (playlist runs short)
-      # or add that song and end playlist creation (playlist runs long)
-      # the drive has a sheet with an analysis, and we get closer to the desired length if we run short
-      # however, I left the code to have the playlist run long here in case we decide to go with that
       if current_track_df.min(axis=0)['duration'] > time_remaining:
-        # UNCOMMENT NEXT 3 LINES TO HAVE PLAYLIST RUN LONG
-        # track = current_track_df[current_track_df.duration == current_track_df.duration.min()].iloc[0]
-        # chosen_tracks.append(track.id)
-        # total_time += track.duration
+        if not chosen_tracks: # need at least 1 track
+          return current_track_df[current_track_df.duration == current_track_df.duration.min()].iloc[0]
         time_remaining = 0
       else: # if there's still songs that can fit in the remain time, continue with the function
         # keep only songs that are less than or equal to the time remaining
@@ -144,5 +137,6 @@ class SpotifyHandler(Spotify):
       user=user_id,
       name=new_playlist_name
     )['id'] # grab the playlist ID from the json returned with info of the new playlist
+    print(chosen_songs)
     self.user_playlist_add_tracks(user_id, playlist_id, chosen_songs)
     return self.playlist(playlist_id), total_time

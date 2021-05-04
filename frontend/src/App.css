@@ -100,7 +100,11 @@ label {
   background-color: #96CC95;
 }
 
-.buttonforms:focus {
+/* .buttonforms:focus {
+  background-color: #1DB954;
+} */
+
+.buttonforms.clicked {
   background-color: #1DB954;
 }
 
@@ -122,6 +126,14 @@ label {
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
+}
+
+.errorText {
+  color: rgb(179, 54, 54);
+}
+
+.hidden {
+  display: none;
 }
 
 @media all and (max-width:30em){

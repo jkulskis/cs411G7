@@ -6,6 +6,27 @@ function Home() {
 
   useEffect(() => {
     document.title = "Home"
+    // if force logged out, then display the error message to the user
+    let loginText = document.getElementById("loginText");
+    console.log(localStorage);
+    if (localStorage["loggedOut"] === "1") {
+      loginText.innerHTML = "You were logged out! Please login again to make your playlist:";
+      loginText.classList.add("errorText");
+    }
+    else if (localStorage["durationLengthError"] === "1") {
+      loginText.innerHTML = "Your travel time was too long! Please keep your journey below 48 hours";
+      loginText.classList.add("errorText");
+    }
+    else if (localStorage["durationLengthError"] === "2") {
+      loginText.innerHTML = "Your travel time was too short!";
+      loginText.classList.add("errorText");
+    }
+    localStorage["origin"] = "";
+    localStorage["destination"] = "";
+    localStorage["mot"] = "";
+    localStorage["speed"] = "";
+    localStorage["durationLengthError"] = "0";
+    localStorage["loggedOut"] = "0";
   }, []);
 
   const history = useHistory();
@@ -48,7 +69,7 @@ function Home() {
               }).then((response) => {
                 if (response.status === 401) {
                   // Not logged in still...reload page
-                  window.location.reload(false);
+                  window.location.reload();
                 } else if (response.status === 200) {
                   // logged in already
                   return response.json()
@@ -59,7 +80,6 @@ function Home() {
                 if (data) { // if we passed data, then response was 200, has display_name
                   localStorage.clear();
                   localStorage.setItem("display_name", data.display_name);
-                  console.log(localStorage);
                   history.push("/page1");
                 }
               });
@@ -85,7 +105,7 @@ function Home() {
         favourite tracks.
       </p>
       <br />
-      <p> Login with Spotify to start making a playlist:</p>
+      <p id="loginText"> Login with Spotify to start making a playlist:</p>
       <br />
       <center>
         <button onClick={loginButton} className="button">
