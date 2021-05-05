@@ -22,10 +22,10 @@ def get_playlist():
     mot=session['user_choices']['mot']
   )
   # change duration according to user speed (for normal just leave the same)
-  if session['user_choices']['speed'] == 'faster':
-    session['duration'] *= 1.2 # 20% speed increase
-  elif session['user_choices']['speed'] == 'slower':
-    session['duration'] *= 0.2 # 20% speed decrease
+  if session['user_choices']['speed'] == 'slower':
+    session['duration'] *= 1.2 # increases duration of playlist to match longer commute
+  elif session['user_choices']['speed'] == 'faster':
+    session['duration'] *= 0.8 # decreases duration of playlist to match shorter commute
   if session['duration'] > 48*60*60: # must be less than 48 hours
     return jsonify({
       'display_name': session['display_name'],
