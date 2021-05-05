@@ -30,8 +30,8 @@ function Home() {
   }, []);
 
   const history = useHistory();
-  // note: idk how "correct" this code is, I've never really used react. This is just showing an example of how we fetch data
-  // from the login entry point of the API. For other pages (like origin/destination, speed, mode of transport) we
+  // This is showing an example of how we fetch data from the login entry point of the API.
+  // For other pages (like origin/destination, speed, mode of transport) we
   // will do a post request to send that information to the server, where it can be stored until we do a request to
   // create the playlist
   async function loginButton() {
@@ -58,8 +58,8 @@ function Home() {
             "Login with Spotify",
             "width=800,height=800"
           );
-          // this is definitely a hacky way to do this...but this will check if the window
-          // is closed every 0.5s, and if it has closed then it will check if we are logged in.
+          // This will check if the window is closed every 0.5s,
+          // and if it has closed then it will check if we are logged in.
           // If we are, then it brings us to the next page. Otherwise, it just reloads the home page
           var timer = setInterval(function () {
             if (windowref.closed) {
