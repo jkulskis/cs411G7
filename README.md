@@ -6,7 +6,7 @@ Group 7, Section A3:
 * Chloe Adamowicz: *chloeadamo*
 * Hannah Barenboim: *hannahb323*
 * Akash Rudra: *akashrudra18*
-* Jamie Dela Cruz: *jamie-dc* and *aahwangxyz* (Jamie's note: As stated on a private Piazza post, I had technical problems with my laptop halfway through the semester, so I borrowed a friend's laptop. Despite logging into my GitHub account on their device, it somehow still pushed to the repo using their account. However, all changes are made from *aahwangxyz* are entirely mine.)
+* Jamie Dela Cruz: *jamie-dc* and *aahwangxyz* (Jamie's note: As stated on a private Piazza post, I had technical problems with my laptop halfway through the semester, so I borrowed a friend's laptop. Despite logging into my GitHub account on their device, it somehow still pushed to the repo using their account. However, all changes made from *aahwangxyz* are entirely mine.)
 
 ## Demo Video
 Please see the video at https://drive.google.com/file/d/1oTneTqdWQeWO4RuM6fG7VV4ioJOKsJ3b/view?usp=sharing for a walkthrough of our web app. 
