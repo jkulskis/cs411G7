@@ -110,12 +110,12 @@ class SpotifyHandler(Spotify):
     current_track_df = track_df
     
     while time_remaining > 0:
-      if current_track_df.min(axis=0)['duration'] > time_remaining:
+      if current_track_df.min(axis=0)['duration'] > time_remaining: #if the shortest song is longer than the time remaining, end playlist creation. This makes the playlist sometimes run short, but having it run short brings it closer to the exact length of the trip than having the playlist run long.
         if not chosen_tracks: # need at least 1 track
           return current_track_df[current_track_df.duration == current_track_df.duration.min()].iloc[0]
-        time_remaining = 0
+        time_remaining = 0 # ends playlist creation
       else: # if there's still songs that can fit in the remain time, continue with the function
-        # keep only songs that are less than or equal to the time remaining
+        # keep only songs that are shorter than or equal to the time remaining
         current_track_df = current_track_df[current_track_df.duration <= (time_remaining)]
         if current_track_df.empty: # would hit this point if user needed a playlist so long that we need repeats
           current_track_df = og_track_df # will start having repeats
