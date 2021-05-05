@@ -73,7 +73,6 @@ function Page3() {
                         return(res.json());
                     }
                 })
-                // .then(function (r) {console.log(r)})
             }} className="button"> 
                 Next Page
             </Button>
