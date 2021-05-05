@@ -1,32 +1,88 @@
 # cs411G7
 
-## Backend to Frontend Mapping
-1. home > `home.py` == `Home.js`
-    * Already handled
-2. travel > `travel.py` == `Page1.js`
-    * Variables in `travel.py` to grab from the backend when making a `GET` request from the frontend to the backend:
-        * '**display_name**' == The username
-        * '**user_choices**' == At this point, this stores the user's origin and destination
-    * Variables that should exist in `Page1.js` to send to the backend when making a `POST` request from the frontend to the backend:
-        * '**origin**' == User's current location. In `travel.py`, this will be used the line `origin = request.json.get('origin')`
-        * '**destination**' == User's destination. In `travel.py`, this will be used the line `destination = request.json.get('destination')`
+## Flask directory structure
+Everything is organized according to https://flask.palletsprojects.com/en/1.1.x/tutorial/layout/
+The current app folder is called *playlist_maker* 
 
-3. mot > `mot.py` == `Page2.js`
-    * Variables in `mot.py` to grab from the backend when making a `GET` request from the frontend to the backend:
-        * '**display_name**' == The username
-        * '**user_choices**' == At this point, this stores the user's origin, destination, and mode of transportation
-    * Variables that should exist in `Page2.js` to send to the backend when making a `POST` request from the frontend to the backend:
-        * '**mot**' == The user's mode of transportation. In `mot.py`, this will be used in the line `mot = request.json.get('mot')`. Value of '**mot**' should either be 'walking', 'driving', or 'biking'
-4. speed > `speed.py` == `Page3.js`
-    * Variables in `speed.py` to grab from the backend when making a `GET` request from the frontend to the backend:
-        * '**display_name**' == The username
-        * '**user_choices**' == At this point, this stores the user's origin, destination, mode of transportation, and speed
-    * Variables that should exist in `Page3.js` to send to the backend when making a `POST` request from the frontend to the backend:
-        * '**speed**' == The user's speed. In `speed.py`, this will be used in the line `speed = request.json.get('speed')`. Value of '**speed**' should either be 'slower', 'normal', or 'faster'
-5. playlist > `playlist.py` == `Page4.js`
-    * Variables in `playlist.py` to grab from the backend when making a `GET` request from the frontend to the backend:
-        * '**display_name**' == The username
-        * '**user_choices**' == This stores the user's origin, destination, mode of transportation, and speed
-        * '**playlist**' == The URL of the playlist. Clicking the "My Playlist" button should show this
-    * No `POST` requests necessary
+## Setting up a development environment
+Make sure that all API keys and sensitive info are stored in `backend/instance/config.py`
 
+While developing the application, it can be helpful to setup a python virtual environment for package management.
+
+### You can install virtualenv with:
+
+*On macOS and Linux:*
+
+`python3 -m pip install --user virtualenv`
+
+*On Windows:*
+
+`py -m pip install --user virtualenv`
+
+### Next, just create a venv with:
+
+*On macOS and Linux:*
+
+`python3 -m venv env`
+
+*On Windows:*
+
+`py -m venv env`
+
+### Then you can activate the venv with:
+
+*On macOS and Linux:*
+
+`source env/bin/activate`
+
+*On Windows:*
+
+`.\env\Scripts\activate`
+
+Now when you use python, it should be from the venv source, so your environment will be isolated to the project and you won't mess with your native environment + you can easily test things with a clean slate.
+
+Once you are done with the venv, you can leave it by running `deactivate`
+
+## Running the Backend
+
+After you have activated your venv, run
+
+`python setup.py install develop`
+
+By adding `develop`, when a change is added you won't need to reinstall every time you make a change, since a symbolic link is created to the project directory instead of copying everything to the python site-packages.
+
+## Running the flask app
+
+Now, just run the following to start up the flask app 
+
+(instructions from https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/#run-the-application)
+
+*On macOS and Linux*
+```
+$ export FLASK_APP=playlist_maker
+$ export FLASK_ENV=development
+$ flask run
+```
+
+*On Windows CMD*
+```
+> set FLASK_APP=playlist_maker
+> set FLASK_ENV=development
+> flask run
+```
+
+*On Windows PowerShell*
+```
+> $env:FLASK_APP = "playlist_maker"
+> $env:FLASK_ENV = "development"
+> flask run
+```
+
+## Running tests
+Install all test requirements with `pip install -e .[test]` and run all tests with `pytest`
+
+Check `pytest --help` for more options
+
+## Extra notes 
+
+Before running, you need to *manually* create a `config.py` file in the `backend/instance` directory and add the necessary API keys. 

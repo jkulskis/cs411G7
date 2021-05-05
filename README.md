@@ -1,97 +1,28 @@
 # cs411G7
+Repo for Spring 2021 CS411 Final Project.
+## Team
+Group 7, Section A3:
+* John Mikulskis: *jkulskis*
+* Chloe Adamowicz: *chloeadamo*
+* Hannah Barenboim: *hannahb323*
+* Akash Rudra: *akashrudra18*
+* Jamie Dela Cruz: *jamie-dc* and *aahwangxyz* (Jamie's note: As stated on a private Piazza post, I had technical problems with my laptop halfway through the semester, so I borrowed a friend's laptop. Despite logging into my GitHub account on their device, it somehow still pushed to the repo using their account. However, all changes are made from *aahwangxyz* are entirely mine.)
 
-## Flask directory structure
-Everything is organized according to https://flask.palletsprojects.com/en/1.1.x/tutorial/layout/
-The current app folder is called *playlist_maker* but we can change this in the future when we come
-up with a better name.
+## Demo Video
+Please see the video at https://drive.google.com/file/d/1oTneTqdWQeWO4RuM6fG7VV4ioJOKsJ3b/view?usp=sharing for a walkthrough of our web app. 
 
-## Setting up a development environment
-Make sure that all API keys and sensitive info are stored in `backend/instance/config.py`
+## Project Summary
+Want the perfect playlist for your daily commute or a walk outside? Our **Playlist Maker** web application creates a customized playlist for your travel needs. Just input your current location and your destination, your mode of transportation, and the speed of your travel (in a rush? slowing down and taking your time? or just going at a regular pace?). Our app calculates the length of your commute and generates a playlist with a duration that closely matches so that you don't have to do that fiddling yourself. But that's not all! We know that you don't want to listen to bright and cheery music when it's gloomy out, and you don't want to bring the mood down when the sun is shining. Our app also matches the music to the current weather, creating a playlist custom-made for the exact trip you're about to take. 
 
-While developing the application, it can be helpful to setup a python virtual environment for package management.
+## Technical Requirements
+* Utilizes a redis database.
+* Two APIs:
+    - Weather: [Open Weather Map API](https://openweathermap.org/api) to grab the current weather. This information is factored in when choosing the music genres for generating the playlist. We used the [PyOWM](https://pyowm.readthedocs.io/en/latest/) Python wrapper library in implementation.
+    - Spotify: [Spotify Web API](https://developer.spotify.com/documentation/web-api/) to generate the playlist for the user. We used the [Spotipy](https://spotipy.readthedocs.io/en/2.18.0/) Python library in implementation.
+* Third party authentication:
+    - Logging into Spotify with [User Authorization](https://developer.spotify.com/documentation/general/guides/authorization-guide/) with OAuth 2.0
+* Decoupled Architecture:
+    - Python Flask backend, React frontend.
 
-### You can install virtualenv with:
-
-*On macOS and Linux:*
-
-`python3 -m pip install --user virtualenv`
-
-*On Windows:*
-
-`py -m pip install --user virtualenv`
-
-### Next, just create a venv with:
-
-*On macOS and Linux:*
-
-`python3 -m venv env`
-
-*On Windows:*
-
-`py -m venv env`
-
-### Then you can activate the venv with:
-
-*On macOS and Linux:*
-
-`source env/bin/activate`
-
-*On Windows:*
-
-`.\env\Scripts\activate`
-
-Now when you use python, it should be from the venv source, so your environment will be isolated to the project and you won't mess with your native environment + you can easily test things with a clean slate.
-
-Once you are done with the venv, you can leave it by running `deactivate`
-
-## FOR BACKEND: Running the backend server
-
-After you have activated your venv, go into the backend directory with 
-
-`cd backend`
-
-then run
-
-`python setup.py install develop`
-
-By adding `develop`, when a change is added you won't need to reinstall every time you make a change, since a symbolic link is created to the project directory instead of copying everything to the python site-packages.
-
-## Running the flask app
-
-Now, just run the following to start up the flask app 
-
-(instructions from https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/#run-the-application)
-
-*On macOS and Linux*
-```
-$ export FLASK_APP=playlist_maker
-$ export FLASK_ENV=development
-$ flask run
-```
-
-*On Windows CMD*
-```
-> set FLASK_APP=playlist_maker
-> set FLASK_ENV=development
-> flask run
-```
-
-*On Windows PowerShell*
-```
-> $env:FLASK_APP = "playlist_maker"
-> $env:FLASK_ENV = "development"
-> flask run
-```
-
-## Running tests
-Install all test requirements with `pip install -e .[test]` and run all tests with `pytest`
-
-Check `pytest --help` for more options
-
-## Extra notes / structure clarifications
-
-The file named `playlist_maker/__init__.py` contains the functions of the app. (we can split more complex functionality into blueprints later, see https://flask.palletsprojects.com/en/1.1.x/blueprints/)
-
-The `playlist_maker/templates` folder contains the front-end HTML.
-
-Before running the prototype example, you need to *manually* generate an auth token and insert it into the code where indicated. We will change this in the future.
+## Extras
+* Google Maps [Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) to get the latitude and longitude of a given location and Google Maps [Distance Matrix](https://developers.google.com/maps/documentation/distance-matrix/overview) to calculate the commute time between the origin and destination. We used the [googlemaps](https://github.com/googlemaps/google-maps-services-python) Python library in implementation.
