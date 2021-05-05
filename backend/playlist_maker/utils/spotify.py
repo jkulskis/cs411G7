@@ -86,7 +86,7 @@ class SpotifyHandler(Spotify):
     recs = self.recommendations(
       seed_genres=genres,
       limit=100, 
-      max_duration_ms=600000, # at a maximum, have a 10 minute track
+      max_duration_ms=360000, # at a maximum, have a 6 minute track
       min_popularity=20 # popularity in [0, 100]
     )
     track_list = [(track['id'], track['duration_ms']/1000) for track in recs['tracks']]
