@@ -137,6 +137,11 @@ class SpotifyHandler(Spotify):
       user=user_id,
       name=new_playlist_name
     )['id'] # grab the playlist ID from the json returned with info of the new playlist
-    print(chosen_songs)
-    self.user_playlist_add_tracks(user_id, playlist_id, chosen_songs)
+    while (chosen_songs):
+      if (len(chosen_songs) > 99):
+        self.user_playlist_add_tracks(user_id, playlist_id, chosen_songs[0:100])
+        chosen_songs = chosen_songs[100:]
+      else:
+        self.user_playlist_add_tracks(user_id, playlist_id, chosen_songs)
+        chosen_songs = []
     return self.playlist(playlist_id), total_time
